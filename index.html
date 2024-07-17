@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ffcccc, #ffe6e6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      
+      background: white;
+      padding: 80px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .calculator h1 {
+      color: #ff6666;
+    }
+
+    .calculator input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .calculator button {
+      background: #ff6666;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .calculator button:hover {
+      background: #ff4d4d;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ff3333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calculator">
+    <h1>Love Calculator</h1>
+    <input type="text" id="yourName" placeholder="Your Name">
+    <input type="text" id="crushName" placeholder="Your Crush's Name">
+    <button onclick="calculateLove()">Calculate Love</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateLove() {
+      const yourName = document.getElementById('yourName').value;
+      const crushName = document.getElementById('crushName').value;
+      // var name1 = prompt("Please enter your name:");
+      // // var name2 = prompt("Please enter your crush's name:");
+      var name1_array = yourName.split("");
+      var name2_array = crushName.split("");
+      var love = ['l', 'o', 'v', 'e', 's'];
+      var combined = name1_array.concat(love, name2_array);
+      var number_array = [];
+      for (let i = 0; i < combined.length; i++) {
+        var counter = 1;
+        var val = combined[i];
+        if (val != '#') {
+          for (let j = i + 1; j < combined.length; j++) {
+            if (combined[j] == val) {
+              combined[j] = '#';
+              counter++;
+            }
+          }
+          number_array.push(counter);
+        }
+      }
+      function solve(arr) {
+        var new_arr = [];
+        for (let i = 0; i < arr.length / 2; i++) {
+          // console.log("this is i : " + i);
+          if (i != arr.length - i - 1) {
+            var sum = arr[i] + arr[arr.length - i - 1];
+            if (sum >= 10) {
+              splitted = split(sum);
+              new_arr.push(...splitted);
+            }
+            else {
+              new_arr.push(sum);
+            }
+          }
+          else if (i == arr.length - i - 1) {
+            new_arr.push(arr[i]);
+          }
+        }
+        return new_arr;
+      }
+
+      function split(number) {
+        var split_array = [];
+        while (number > 0) {
+          // console.log(number);
+          split_array.push(number % 10);
+          number = Math.floor(number / 10);
+        }
+        return split_array.reverse();
+      }
+
+      // console.log(number_array);
+      // console.log(solve(number_array));
+      while (number_array.length >= 3) {
+        number_array = solve(number_array);
+      }
+      var lovePercentage = 0;
+      for(let i=0;i<number_array.length;i++){
+        
+        lovePercentage = lovePercentage*10 + number_array[i];
+      }
+
+      // console.log(split(12));
+
+
+      // const yourName = document.getElementById('yourName').value;
+      // const crushName = document.getElementById('crushName').value;
+
+      if (yourName === "" || crushName === "") {
+        alert("Please enter both names!");
+        return;
+      }
+
+      // const lovePercentage = Math.floor(Math.random() * 100) + 1;
+      document.getElementById('result').innerText = `${yourName} and ${crushName} have a love compatibility of ${lovePercentage}%`;
+    }
+  </script>
+  <!-- <script src="index2.js"></script> -->
+</body>
+
+</html>
